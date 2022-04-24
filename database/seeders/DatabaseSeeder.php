@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder
         $posts = Post::factory(10)->create();
         $tags = Tag::factory(5)->create();
         foreach ($posts as $post) {
-            $post->tags()->sync(Tag::all()->random());
+            $post->tags()->sync(Tag::all()->random(random(1,5)));
         }
         
     }
