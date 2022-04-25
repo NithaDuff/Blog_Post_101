@@ -11,9 +11,6 @@
                   	<a href="/posts/{{$post->slug}}">{{$post->title}}</a>
                   </td>
                   <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                  	Published
-                  </td>
-                  <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
                   	<a href="/admin/posts/{{$post->slug}}/edit"
                     	class="px-3 py-1 border border-blue-300 rounded-full text-blue-300 text-xs uppercase font-semibold"
                     	style="font-size: 10px">Edit</a>
