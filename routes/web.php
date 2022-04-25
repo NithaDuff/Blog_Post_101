@@ -20,29 +20,30 @@ use App\Http\Controllers\SessionsController;
 |
 */
 
-Route::get('/', [PostsController::class,'index'])->name('home');
+Route::get('/', [PostsController::class,'index'])->name('home');//homepage
 
-Route::get('posts/{post:slug}', [PostsController::class,'show']);
+Route::get('posts/{post:slug}', [PostsController::class,'show']);//posts-reroute
 
-Route::get('/register',[RegisterController::class, 'create'])->middleware('guest');
+Route::post('/logout',[SessionsController::class, 'destroy'])->middleware('auth');//logout
 
-Route::post('/register',[RegisterController::class, 'store'])->middleware('guest');
+Route::middleware('guest')->group(function () {
+    
+    Route::get('/register',[RegisterController::class,'create']);
+    Route::post('/register',[RegisterController::class,'store']);
+    Route::get('/login',[SessionsController::class,'create']);
+    Route::post('/sessions',[SessionsController::class,'store']);
+    
+});
 
-Route::get('/login',[SessionsController::class, 'create'])->middleware('guest');
+Route::middleware('can:admin')->group(function () {
+    
+    Route::get('/admin/posts/create',[PostsController::class,'create']);//new
+    Route::post('/admin/post',[PostsController::class,'store']);//new-submit
+    Route::get('/admin/posts/edit',[PostsController::class,'list']);//list
+    Route::get('/admin/posts/{post:slug}/edit',[PostsController::class,'edit']);//edit
+    Route::patch('/admin/posts/{post}',[PostsController::class,'update']);//edit-submit
+    Route::delete('/admin/posts/{post}',[PostsController::class,'destroy']);//delete-post
+    
+});
 
-Route::post('/sessions',[SessionsController::class, 'store'])->middleware('guest');
-
-Route::post('/logout',[SessionsController::class, 'destroy'])->middleware('auth');
-
-Route::get('/admin/posts/create',[PostsController::class,'create'])->middleware('admin');//new
-
-Route::post('/admin/post',[PostsController::class,'store'])->middleware('admin');//new-submit
-
-Route::get('/admin/posts/edit',[PostsController::class,'list'])->middleware('admin');//list
-
-Route::get('/admin/posts/{post:slug}/edit',[PostsController::class,'edit'])->middleware('admin');//edit
-
-Route::patch('/admin/posts/{post}',[PostsController::class,'update'])->middleware('admin');//edit-submit
-
-Route::delete('/admin/posts/{post}',[PostsController::class,'destroy'])->middleware('admin');//edit-submit
 
