@@ -5,6 +5,9 @@ namespace App\Providers;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
 use App\Models\Post;
+use App\Models\User;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,5 +31,13 @@ class AppServiceProvider extends ServiceProvider
         Relation::morphMap([
             'post' => Post::class
         ]);
+        
+        Gate::define('admin', function(User $user) {
+            return $user->is_admin == 1;
+        });
+        
+        Blade::if('admin', function() {
+            return request()->user()->can('admin');
+        });
     }
 }
