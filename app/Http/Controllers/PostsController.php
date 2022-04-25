@@ -103,4 +103,13 @@ class PostsController extends Controller
         
         return redirect('/admin/posts/edit')->with('success','Post Updated!');
     }
+    
+    public function destroy(Post $post){
+        
+        $post->delete();
+        
+        return redirect('/admin/posts/edit')->with('success','Post Deleted!');
+        
+        
+    }
 }

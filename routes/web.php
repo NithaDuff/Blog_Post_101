@@ -43,3 +43,6 @@ Route::get('/admin/posts/edit',[PostsController::class,'list'])->middleware('adm
 Route::get('/admin/posts/{post:slug}/edit',[PostsController::class,'edit'])->middleware('admin');//edit
 
 Route::patch('/admin/posts/{post}',[PostsController::class,'update'])->middleware('admin');//edit-submit
+
+Route::delete('/admin/posts/{post}',[PostsController::class,'destroy'])->middleware('admin');//edit-submit
+
